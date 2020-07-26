@@ -4,7 +4,7 @@ MAINTAINER https://github.com/vdedios
 
 COPY ./srcs/* ./
 
-RUN apk update && apk add nginx && apk add openrc openssl openssh\
+RUN apk update && apk add nginx openrc openssl openssh\
 	&& mkdir /etc/nginx/sites-available \
 	&& mkdir /etc/nginx/sites-enabled \
 	&& mkdir /var/www/html \
