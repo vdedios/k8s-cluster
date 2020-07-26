@@ -4,7 +4,7 @@ MAINTAINER https://github.com/vdedios
 
 COPY ./srcs/* ./
 
-RUN apk update && apk add nginx && apk add openrc openssl\
+RUN apk update && apk add nginx && apk add openrc openssl openssh\
 	&& mkdir /etc/nginx/sites-available \
 	&& mkdir /etc/nginx/sites-enabled \
 	&& mkdir /var/www/html \
@@ -13,11 +13,13 @@ RUN apk update && apk add nginx && apk add openrc openssl\
 	&& mv index.html /var/www/html \
 	&& rm /etc/nginx/nginx.conf && mv nginx.conf /etc/nginx \
 	&& rm /etc/nginx/conf.d/default.conf \
+	&& rm /etc/ssh/sshd_config \
+	&& mv sshd_config /etc/ssh \
 	&& openssl req -x509 -nodes -days 365 \
 	-newkey rsa:2048 -subj "/C=SP/ST=Spain/L=Madrid/O=42/CN=127.0.0.1" \
 	-keyout /etc/ssl/private/server.key \
 	-out /etc/ssl/certs/server.crt
 
-CMD	openrc reboot && rc-service nginx start && ash
+CMD	openrc reboot && rc-service nginx start && rc-service sshd start && ash
 
-EXPOSE 80 443
+EXPOSE 80 443 22
