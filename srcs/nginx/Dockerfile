@@ -15,6 +15,7 @@ RUN apk update && apk add nginx openrc openssl openssh\
 	&& rm /etc/nginx/conf.d/default.conf \
 	&& rm /etc/ssh/sshd_config \
 	&& mv sshd_config /etc/ssh \
+	&& echo "root:root" | chpasswd \
 	&& openssl req -x509 -nodes -days 365 \
 	-newkey rsa:2048 -subj "/C=SP/ST=Spain/L=Madrid/O=42/CN=127.0.0.1" \
 	-keyout /etc/ssl/private/server.key \
