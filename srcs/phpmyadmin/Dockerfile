@@ -15,6 +15,7 @@ RUN apk update && apk add wget nginx php-fpm php-mbstring openrc\
 	&& tar xvf phpMyAdmin-5.0.2-all-languages.tar.gz \
 	&& mv phpMyAdmin-5.0.2-all-languages /var/www/html/phpmyadmin \
 	&& rm -rf phpMyAdmin-5.0.2-all-languages.tar.gz \
+	&& mv config.sample.inc.php /var/www/html/phpmyadmin \
 
 CMD	openrc reboot && rc-service php-fpm7 start && rc-service nginx start && ash
 
