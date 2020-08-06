@@ -4,12 +4,13 @@ MAINTAINER https://github.com/vdedios
 
 COPY srcs/* ./
 
-RUN apk add mysql openrc\
-	&& mv config_db.sql /tmp \
-	&& mv wordpress.sql /tmp \
-	&& rc-service mysql start \
-	&& mysql < /tmp/config_db.sql \
-	&& mysql wordpress < /tmp/wordpress.sql \
-	&& rc-service mysql stop
+RUN apk add mysql mysql-client openrc \
+    && openrc reboot \
+    && cp mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf \
+    && /etc/init.d/mariadb setup \
+    && /etc/init.d/mariadb start \
+    && mariadb < config_db.sql
 
-CMD openrc reboot && rc-service mysql start && ash
+CMD openrc reboot && /etc/init.d/mariadb start && ash
+
+EXPOSE 3306

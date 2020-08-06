@@ -4,7 +4,7 @@ MAINTAINER https://github.com/vdedios
 
 COPY srcs/* ./
 
-RUN apk update && apk add wget nginx php-fpm php-mbstring openrc\
+RUN apk update && apk add wget nginx php-fpm php-mbstring openrc php7-json php7-mysqli\
 	&& rm /etc/nginx/nginx.conf && mv nginx.conf /etc/nginx \
 	&& mkdir /etc/nginx/sites-available \
 	&& mkdir /etc/nginx/sites-enabled \
