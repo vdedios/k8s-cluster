@@ -4,19 +4,13 @@ MAINTAINER https://github.com/vdedios
 
 COPY srcs/* ./
 
-RUN apk update && apk add wget nginx php-fpm php-mbstring openrc php7-json php7-mysqli\
-	&& rm /etc/nginx/nginx.conf && mv nginx.conf /etc/nginx \
-	&& mkdir /etc/nginx/sites-available \
-	&& mkdir /etc/nginx/sites-enabled \
-	&& mkdir /var/www/html \
-	&& mv default /etc/nginx/sites-available/ \
-	&& ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default \
+RUN apk update && apk add wget php-fpm php-mbstring php7-json php7-mysqli\
 	&& wget https://es.wordpress.org/latest-es_ES.tar.gz \
 	&& tar xvf latest-es_ES.tar.gz \
-	&& mv wordpress/* /var/www/html \
+	&& mv wordpress/* /var/www \
 	&& rm -rf latest-es_ES.tar.gz \
-	&& mv wp-config.php /var/www/html
+	&& mv wp-config.php /var/www
 
-CMD	openrc reboot && rc-service php-fpm7 start && rc-service nginx start && ash
+CMD	php -S 0.0.0.0:5050 -t /var/www
 
 EXPOSE 5050
