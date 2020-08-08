@@ -14,6 +14,6 @@ RUN apk update && apk add vsftpd openssl\
 	-keyout /etc/ssl/private/vsftpd.key \
 	-out /etc/ssl/certs/vsftpd.crt
 
-CMD	vsftpd /etc/vsftpd/vsftpd.conf && ash
+CMD	vsftpd /etc/vsftpd/vsftpd.conf
 
 EXPOSE 21 1030-1040
