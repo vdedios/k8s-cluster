@@ -4,6 +4,6 @@ MAINTAINER https://github.com/vdedios
 
 RUN apk update && apk add influxdb
 
-CMD	ash
+CMD influxd run -config /etc/influxdb.conf
 
-EXPOSE 3000
+EXPOSE 8086
