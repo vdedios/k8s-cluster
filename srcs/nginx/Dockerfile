@@ -16,11 +16,12 @@ RUN apk update && apk add nginx openrc openssl openssh\
 	&& rm /etc/ssh/sshd_config \
 	&& mv sshd_config /etc/ssh \
 	&& echo "root:root" | chpasswd \
+	&& mkdir /run/nginx \
 	&& openssl req -x509 -nodes -days 365 \
 	-newkey rsa:2048 -subj "/C=SP/ST=Spain/L=Madrid/O=42/CN=127.0.0.1" \
 	-keyout /etc/ssl/private/server.key \
 	-out /etc/ssl/certs/server.crt
 
-CMD	openrc reboot && rc-service nginx start && rc-service sshd start && ash
+CMD	openrc reboot && rc-service sshd start && nginx -g 'daemon off;'
 
 EXPOSE 80 443 22
