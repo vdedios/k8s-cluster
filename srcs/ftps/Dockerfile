@@ -16,4 +16,4 @@ RUN apk update && apk add vsftpd openssl\
 
 CMD	vsftpd /etc/vsftpd/vsftpd.conf
 
-EXPOSE 21 1030-1040
+EXPOSE 21 31030-31040

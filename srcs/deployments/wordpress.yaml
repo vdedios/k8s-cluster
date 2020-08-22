@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: "2020-08-22T15:31:46Z"
+  generation: 1
+  labels:
+    app: wordpress
+  managedFields:
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .: {}
+          f:app: {}
+      f:spec:
+        f:progressDeadlineSeconds: {}
+        f:replicas: {}
+        f:revisionHistoryLimit: {}
+        f:selector:
+          f:matchLabels:
+            .: {}
+            f:app: {}
+        f:strategy:
+          f:rollingUpdate:
+            .: {}
+            f:maxSurge: {}
+            f:maxUnavailable: {}
+          f:type: {}
+        f:template:
+          f:metadata:
+            f:labels:
+              .: {}
+              f:app: {}
+          f:spec:
+            f:containers:
+              k:{"name":"mywordpress"}:
+                .: {}
+                f:image: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:resources: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+            f:dnsPolicy: {}
+            f:restartPolicy: {}
+            f:schedulerName: {}
+            f:securityContext: {}
+            f:terminationGracePeriodSeconds: {}
+    manager: kubectl
+    operation: Update
+    time: "2020-08-22T15:31:46Z"
+  name: wordpress
+  namespace: default
+  resourceVersion: "18707"
+  selfLink: /apis/apps/v1/namespaces/default/deployments/wordpress
+  uid: cdd53cba-0fc8-4278-8421-c33545284218
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: wordpress
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: wordpress
+    spec:
+      containers:
+      - image: mywordpress
+        imagePullPolicy: Never
+        name: mywordpress
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status: {}
