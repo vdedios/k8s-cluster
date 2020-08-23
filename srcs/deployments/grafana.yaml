@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: "2020-08-22T15:31:46Z"
+  creationTimestamp: "2020-08-23T10:43:42Z"
   generation: 1
   labels:
-    app: wordpress
+    app: grafana
   managedFields:
   - apiVersion: apps/v1
     fieldsType: FieldsV1
@@ -34,7 +34,7 @@ metadata:
               f:app: {}
           f:spec:
             f:containers:
-              k:{"name":"mywordpress"}:
+              k:{"name":"mygrafana"}:
                 .: {}
                 f:image: {}
                 f:imagePullPolicy: {}
@@ -49,19 +49,19 @@ metadata:
             f:terminationGracePeriodSeconds: {}
     manager: kubectl
     operation: Update
-    time: "2020-08-22T15:31:46Z"
-  name: wordpress
+    time: "2020-08-23T10:43:42Z"
+  name: grafana
   namespace: default
-  resourceVersion: "18707"
-  selfLink: /apis/apps/v1/namespaces/default/deployments/wordpress
-  uid: cdd53cba-0fc8-4278-8421-c33545284218
+  resourceVersion: "41716"
+  selfLink: /apis/apps/v1/namespaces/default/deployments/grafana
+  uid: 07b32858-ce22-4181-b570-c7e8552b1036
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: wordpress
+      app: grafana
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -71,12 +71,12 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        app: wordpress
+        app: grafana
     spec:
       containers:
-      - image: mywordpress
+      - image: mygrafana
         imagePullPolicy: Never
-        name: mywordpress
+        name: mygrafana
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
@@ -90,9 +90,9 @@ status: {}
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: "2020-08-23T08:56:34Z"
+  creationTimestamp: "2020-08-23T10:46:34Z"
   labels:
-    app: wordpress
+    app: grafana
   managedFields:
   - apiVersion: v1
     fieldsType: FieldsV1
@@ -105,7 +105,7 @@ metadata:
         f:externalTrafficPolicy: {}
         f:ports:
           .: {}
-          k:{"port":5050,"protocol":"TCP"}:
+          k:{"port":3000,"protocol":"TCP"}:
             .: {}
             f:port: {}
             f:protocol: {}
@@ -117,24 +117,23 @@ metadata:
         f:type: {}
     manager: kubectl
     operation: Update
-    time: "2020-08-23T08:56:34Z"
-  name: wordpress
+    time: "2020-08-23T10:46:34Z"
+  name: grafana
   namespace: default
-  resourceVersion: "33934"
-  selfLink: /api/v1/namespaces/default/services/wordpress
-  uid: 815d663f-6a78-41a0-afe5-cfa1b6723638
+  resourceVersion: "41906"
+  selfLink: /api/v1/namespaces/default/services/grafana
+  uid: 5e65dfcd-a1f9-425d-a608-9bf41428bb3c
 spec:
-  clusterIP: 10.98.152.23
+  clusterIP: 10.102.212.244
   externalTrafficPolicy: Cluster
   ports:
-  - nodePort: 30180
-    port: 5050
+  - nodePort: 32120
+    port: 3000
     protocol: TCP
-    targetPort: 5050
+    targetPort: 3000
   selector:
-    app: wordpress
+    app: grafana
   sessionAffinity: None
   type: LoadBalancer
-  loadBalancerIP: 192.168.64.120
 status:
   loadBalancer: {}

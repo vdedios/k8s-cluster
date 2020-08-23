@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: "2020-08-22T15:32:38Z"
+  creationTimestamp: "2020-08-23T10:43:02Z"
   generation: 1
   labels:
-    app: phpmyadmin
+    app: influx
   managedFields:
   - apiVersion: apps/v1
     fieldsType: FieldsV1
@@ -34,7 +34,7 @@ metadata:
               f:app: {}
           f:spec:
             f:containers:
-              k:{"name":"myphpmyadmin"}:
+              k:{"name":"myinflux"}:
                 .: {}
                 f:image: {}
                 f:imagePullPolicy: {}
@@ -49,19 +49,19 @@ metadata:
             f:terminationGracePeriodSeconds: {}
     manager: kubectl
     operation: Update
-    time: "2020-08-22T15:32:38Z"
-  name: phpmyadmin
+    time: "2020-08-23T10:43:02Z"
+  name: influx
   namespace: default
-  resourceVersion: "18795"
-  selfLink: /apis/apps/v1/namespaces/default/deployments/phpmyadmin
-  uid: feba6ad1-288d-4751-9eca-20e9e49653fa
+  resourceVersion: "41663"
+  selfLink: /apis/apps/v1/namespaces/default/deployments/influx
+  uid: 1e35ba32-bcff-4ad6-a732-74544029d7ee
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: phpmyadmin
+      app: influx
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -71,12 +71,12 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        app: phpmyadmin
+        app: influx
     spec:
       containers:
-      - image: myphpmyadmin
+      - image: myinflux
         imagePullPolicy: Never
-        name: myphpmyadmin
+        name: myinflux
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
@@ -90,9 +90,9 @@ status: {}
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: "2020-08-23T10:28:41Z"
+  creationTimestamp: "2020-08-23T10:47:46Z"
   labels:
-    app: phpmyadmin
+    app: influx
   managedFields:
   - apiVersion: v1
     fieldsType: FieldsV1
@@ -102,10 +102,9 @@ metadata:
           .: {}
           f:app: {}
       f:spec:
-        f:externalTrafficPolicy: {}
         f:ports:
           .: {}
-          k:{"port":5000,"protocol":"TCP"}:
+          k:{"port":8086,"protocol":"TCP"}:
             .: {}
             f:port: {}
             f:protocol: {}
@@ -117,23 +116,21 @@ metadata:
         f:type: {}
     manager: kubectl
     operation: Update
-    time: "2020-08-23T10:28:41Z"
-  name: phpmyadmin
+    time: "2020-08-23T10:47:46Z"
+  name: influx
   namespace: default
-  resourceVersion: "40290"
-  selfLink: /api/v1/namespaces/default/services/phpmyadmin
-  uid: 074a7579-22e5-45d7-8ca4-3cef78baae7e
+  resourceVersion: "41965"
+  selfLink: /api/v1/namespaces/default/services/influx
+  uid: 617f68c6-0571-49b3-87dd-d402ae1f3b6b
 spec:
-  clusterIP: 10.108.53.15
-  externalTrafficPolicy: Cluster
+  clusterIP: 10.97.25.163
   ports:
-  - nodePort: 31287
-    port: 5000
+  - port: 8086
     protocol: TCP
-    targetPort: 5000
+    targetPort: 8086
   selector:
-    app: phpmyadmin
+    app: influx
   sessionAffinity: None
-  type: LoadBalancer
+  type: ClusterIP
 status:
   loadBalancer: {}

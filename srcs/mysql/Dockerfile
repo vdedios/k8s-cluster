@@ -14,6 +14,8 @@ RUN apk add mysql mysql-client openrc \
     && mariadb < wordpress.sql \
     && mkdir -p /run/mariadb
 
-CMD ["./run.sh"]
-
 EXPOSE 3306
+
+VOLUME ["/var/lib/mysql"]
+
+CMD ["./run.sh"]

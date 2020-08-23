@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: "2020-08-22T15:32:38Z"
+  creationTimestamp: "2020-08-23T12:23:43Z"
   generation: 1
   labels:
-    app: phpmyadmin
+    app: telegraf
   managedFields:
   - apiVersion: apps/v1
     fieldsType: FieldsV1
@@ -34,7 +34,7 @@ metadata:
               f:app: {}
           f:spec:
             f:containers:
-              k:{"name":"myphpmyadmin"}:
+              k:{"name":"mytelegraf"}:
                 .: {}
                 f:image: {}
                 f:imagePullPolicy: {}
@@ -49,19 +49,19 @@ metadata:
             f:terminationGracePeriodSeconds: {}
     manager: kubectl
     operation: Update
-    time: "2020-08-22T15:32:38Z"
-  name: phpmyadmin
+    time: "2020-08-23T12:23:43Z"
+  name: telegraf
   namespace: default
-  resourceVersion: "18795"
-  selfLink: /apis/apps/v1/namespaces/default/deployments/phpmyadmin
-  uid: feba6ad1-288d-4751-9eca-20e9e49653fa
+  resourceVersion: "46999"
+  selfLink: /apis/apps/v1/namespaces/default/deployments/telegraf
+  uid: 408effde-5c3e-4a41-a651-5f098bb0b3cb
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: phpmyadmin
+      app: telegraf
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -71,12 +71,20 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        app: phpmyadmin
+        app: telegraf
     spec:
+      volumes:
+        - name: docker-socket
+          hostPath:
+            path: /var/run/docker.sock
+            type: Socket
       containers:
-      - image: myphpmyadmin
+      - image: mytelegraf
         imagePullPolicy: Never
-        name: myphpmyadmin
+        name: mytelegraf
+        volumeMounts:
+          - name: docker-socket
+            mountPath: /var/run/docker.sock
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
@@ -86,54 +94,3 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
 status: {}
----
-apiVersion: v1
-kind: Service
-metadata:
-  creationTimestamp: "2020-08-23T10:28:41Z"
-  labels:
-    app: phpmyadmin
-  managedFields:
-  - apiVersion: v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:labels:
-          .: {}
-          f:app: {}
-      f:spec:
-        f:externalTrafficPolicy: {}
-        f:ports:
-          .: {}
-          k:{"port":5000,"protocol":"TCP"}:
-            .: {}
-            f:port: {}
-            f:protocol: {}
-            f:targetPort: {}
-        f:selector:
-          .: {}
-          f:app: {}
-        f:sessionAffinity: {}
-        f:type: {}
-    manager: kubectl
-    operation: Update
-    time: "2020-08-23T10:28:41Z"
-  name: phpmyadmin
-  namespace: default
-  resourceVersion: "40290"
-  selfLink: /api/v1/namespaces/default/services/phpmyadmin
-  uid: 074a7579-22e5-45d7-8ca4-3cef78baae7e
-spec:
-  clusterIP: 10.108.53.15
-  externalTrafficPolicy: Cluster
-  ports:
-  - nodePort: 31287
-    port: 5000
-    protocol: TCP
-    targetPort: 5000
-  selector:
-    app: phpmyadmin
-  sessionAffinity: None
-  type: LoadBalancer
-status:
-  loadBalancer: {}

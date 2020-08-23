@@ -86,3 +86,78 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
 status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2020-08-23T10:29:21Z"
+  labels:
+    app: nginx
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .: {}
+          f:app: {}
+      f:spec:
+        f:externalTrafficPolicy: {}
+        f:ports:
+          .: {}
+          k:{"port":22,"protocol":"TCP"}:
+            .: {}
+            f:name: {}
+            f:port: {}
+            f:protocol: {}
+            f:targetPort: {}
+          k:{"port":80,"protocol":"TCP"}:
+            .: {}
+            f:name: {}
+            f:port: {}
+            f:protocol: {}
+            f:targetPort: {}
+          k:{"port":443,"protocol":"TCP"}:
+            .: {}
+            f:name: {}
+            f:port: {}
+            f:protocol: {}
+            f:targetPort: {}
+        f:selector:
+          .: {}
+          f:app: {}
+        f:sessionAffinity: {}
+        f:type: {}
+    manager: kubectl
+    operation: Update
+    time: "2020-08-23T10:29:21Z"
+  name: nginx
+  namespace: default
+  resourceVersion: "40371"
+  selfLink: /api/v1/namespaces/default/services/nginx
+  uid: 4fab2bda-1a4b-4f77-9d02-2a84fc2a934b
+spec:
+  clusterIP: 10.99.224.103
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: port-1
+    nodePort: 31296
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  - name: port-2
+    nodePort: 31299
+    port: 443
+    protocol: TCP
+    targetPort: 443
+  - name: port-3
+    nodePort: 30009
+    port: 22
+    protocol: TCP
+    targetPort: 22
+  selector:
+    app: nginx
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}
