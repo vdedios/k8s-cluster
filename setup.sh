@@ -80,6 +80,11 @@ printf "${ORANGE}------> DEPLOYING APPS AND CREATING SERVICES\n${NC}"
 	rm srcs/deployments/ftps_edit.yaml
 	rm srcs/deployments/wordpress_edit.yaml
 
+printf "${ORANGE}------> APPLYING DBs\n${NC}"
+	MYSQL_POD=$(kubectl get pods | awk '/mysql/ {print $1}')
+	echo $MYSQL_POD
+	kubectl exec -it $MYSQL_POD /install_db.sh
+	
 # Print IPs and ports
 PHPMYADMIN_IP=$(kubectl get service/phpmyadmin -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 NGINX_IP=$(kubectl get service/nginx -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
