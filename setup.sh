@@ -14,6 +14,8 @@ NC='\033[0m'
 	cat srcs/hello.txt
 	minikube start
 	minikube ssh "sudo rm -rf /mnt/data/*"
+	minikube ssh "sudo mkdir /mnt/data/mysql"
+	minikube ssh "sudo mkdir /mnt/data/influx"
 	eval $(minikube -p minikube docker-env)
 
 # Clean old deployments and svcs
@@ -69,15 +71,17 @@ printf "${ORANGE}------> DEPLOYING APPS AND CREATING SERVICES\n${NC}"
 	sed -i '' "s+FTPS_IP+$FTPS_IP+g" srcs/deployments/ftps_edit.yaml
 	cp srcs/deployments/wordpress.yaml srcs/deployments/wordpress_edit.yaml
 	sed -i '' "s+WORDPRESS_IP+$WORDPRESS_IP+g" srcs/deployments/wordpress_edit.yaml
-	kubectl apply -f srcs/deployments/volumes.yaml
 	kubectl apply -f srcs/deployments/wordpress_edit.yaml
 	kubectl apply -f srcs/deployments/ftps_edit.yaml
 	kubectl apply -f srcs/deployments/mysql.yaml
 	kubectl apply -f srcs/deployments/phpmyadmin.yaml
 	kubectl apply -f srcs/deployments/nginx.yaml
 	kubectl apply -f srcs/deployments/influx.yaml
-	kubectl apply -f srcs/deployments/grafana.yaml
 	kubectl apply -f srcs/deployments/telegraf.yaml
+	while [ "Running" != "$(kubectl get pods | awk '/telegraf/ {print $3}')" ]; do
+		echo Influx pod not ready
+	done
+	kubectl apply -f srcs/deployments/grafana.yaml
 	rm srcs/deployments/ftps_edit.yaml
 	rm srcs/deployments/wordpress_edit.yaml
 
@@ -85,7 +89,6 @@ printf "${ORANGE}------> APPLYING DBs\n${NC}"
 	MYSQL_POD=$(kubectl get pods | awk '/mysql/ {print $1}')
 	while [ "Running" != "$(kubectl get pods | awk '/mysql/ {print $3}')" ]; do
 		echo MySQL pod not ready
-		sleep(2)
 	done
 	echo $MYSQL_POD
 	kubectl exec -it $MYSQL_POD /install_db.sh
