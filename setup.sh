@@ -13,6 +13,7 @@ NC='\033[0m'
 # Welcome and start Minikube!
 	cat srcs/hello.txt
 	minikube start
+	minikube ssh "sudo rm -rf /mnt/data/*"
 	eval $(minikube -p minikube docker-env)
 
 # Clean old deployments and svcs
