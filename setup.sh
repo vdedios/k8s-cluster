@@ -59,7 +59,7 @@ printf "${ORANGE}------> BUILDING IMAGES\n${NC}"
 	printf "${GREEN}	BUILDING GRAFANA\n${NC}"
 	#docker build -t mygrafana srcs/grafana
 	printf "${GREEN}	BUILDING TELEGRAF\n${NC}"
-	docker build -t mytelegraf srcs/telegraf
+	#docker build -t mytelegraf srcs/telegraf
 	rm srcs/ftps/srcs/vsftpd.conf
 	rm srcs/mysql/srcs/wordpress.sql
 
