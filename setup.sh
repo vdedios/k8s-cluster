@@ -46,21 +46,21 @@ printf "${ORANGE}------> BUILDING IMAGES\n${NC}"
 	cp srcs/ftps/srcs/vsftpd_base.conf srcs/ftps/srcs/vsftpd.conf
 	sed -i '' "s+OLD_IP+$FTPS_IP+g" srcs/ftps/srcs/vsftpd.conf
 	printf "${GREEN}	BUILDING WORDPRESS\n${NC}"
-	#docker build -t mywordpress srcs/wordpress
+	docker build -t mywordpress srcs/wordpress
 	printf "${GREEN}	BUILDING MYSQL\n${NC}"
-	#docker build -t mymysql srcs/mysql
+	docker build -t mymysql srcs/mysql
 	printf "${GREEN}	BUILDING PHPMYADMIN\n${NC}"
-	#docker build -t myphpmyadmin srcs/phpmyadmin
+	docker build -t myphpmyadmin srcs/phpmyadmin
 	printf "${GREEN}	BUILDING NGINX\n${NC}"
-	#docker build -t mynginx srcs/nginx
+	docker build -t mynginx srcs/nginx
 	printf "${GREEN}	BUILDING FTPS\n${NC}"
-	#docker build -t myftps srcs/ftps
+	docker build -t myftps srcs/ftps
 	printf "${GREEN}	BUILDING INFLUXDB\n${NC}"
-	#docker build -t myinflux srcs/influx
+	docker build -t myinflux srcs/influx
 	printf "${GREEN}	BUILDING GRAFANA\n${NC}"
-	#docker build -t mygrafana srcs/grafana
+	docker build -t mygrafana srcs/grafana
 	printf "${GREEN}	BUILDING TELEGRAF\n${NC}"
-	#docker build -t mytelegraf srcs/telegraf
+	docker build -t mytelegraf srcs/telegraf
 	rm srcs/ftps/srcs/vsftpd.conf
 	rm srcs/mysql/srcs/wordpress.sql
 
@@ -83,6 +83,10 @@ printf "${ORANGE}------> DEPLOYING APPS AND CREATING SERVICES\n${NC}"
 
 printf "${ORANGE}------> APPLYING DBs\n${NC}"
 	MYSQL_POD=$(kubectl get pods | awk '/mysql/ {print $1}')
+	while [ "Running" != "$(kubectl get pods | awk '/mysql/ {print $3}')" ]; do
+		echo MySQL pod not ready
+		sleep(2)
+	done
 	echo $MYSQL_POD
 	kubectl exec -it $MYSQL_POD /install_db.sh
 	
