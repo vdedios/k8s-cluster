@@ -1,6 +1,6 @@
 # k8s-cluster ⚓️
 
-A system administration and networking project. Create and deploy a complete [Kubernetes](https://kubernetes.io/) cluster. The aim of this project is to introudce to Kubernetes by creating a self managed cluster to play with in a local environment.
+A system administration and networking project. Create and deploy a complete [Kubernetes](https://kubernetes.io/) cluster. The aim of this project is to introduce to Kubernetes by creating a self managed cluster to play with in a local environment.
 
 
 ## Installation
