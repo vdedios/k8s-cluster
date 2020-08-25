@@ -12,6 +12,6 @@ RUN apk update && apk add wget php7 php-fpm php-mbstring php7-json php7-mysqli\
 	&& rm -rf latest-es_ES.tar.gz \
 	&& mv wp-config.php /var/www
 
-CMD	php -S 0.0.0.0:5050 -t /var/www
+ENTRYPOINT php -S 0.0.0.0:5050 -t /var/www
 
 EXPOSE 5050

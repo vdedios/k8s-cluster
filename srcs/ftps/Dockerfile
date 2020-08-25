@@ -14,6 +14,8 @@ RUN apk update && apk add vsftpd openssl\
 	-keyout /etc/ssl/private/vsftpd.key \
 	-out /etc/ssl/certs/vsftpd.crt
 
-CMD	vsftpd /etc/vsftpd/vsftpd.conf
+# Add signal handler for protected pid1 -> signal SIGINT
+CMD	trap "exit" SIGINT SIGTERM && vsftpd /etc/vsftpd/vsftpd.conf
+ 
 
 EXPOSE 21 31030-31040
