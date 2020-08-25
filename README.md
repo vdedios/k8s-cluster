@@ -22,7 +22,7 @@ Once finished you will get a list of all services with their corresponding ips a
 
 The following specifications are included in this project:
 
-- The **cluster is provisioned with [minikube](https://minikube.sigs.k8s.io/docs/start/)**. This choice is made due to having MacOS as local environment and LoadBalancer as service. Using any multinode/Docker based solution as [kind](https://kind.sigs.k8s.io/docs/user/quick-start/) would only work on Linux since you cannot connect to Docker bridge's network from a MacOS host.
+- The **cluster is set up with [minikube](https://minikube.sigs.k8s.io/docs/start/)**. This choice is made due to having MacOS as local environment and LoadBalancer as service. Using any multinode/Docker based solution as [kind](https://kind.sigs.k8s.io/docs/user/quick-start/) would only work on Linux since you cannot connect to Docker bridge's network from a MacOS host.
 
 - As said, the **service type is LoadBalancer**. Since we are running local and don't have access to any Cloud Provided tooling this service is implemented with [MetalLB](https://metallb.universe.tf/)
 
